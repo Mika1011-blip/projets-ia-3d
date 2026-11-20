@@ -52,7 +52,7 @@ h2{font-size:clamp(3rem,5vw,5rem);letter-spacing:-.065em;line-height:1.02;font-w
 .model-frame img{display:block;width:100%;height:auto}
 .loop-toggle,.overlay-action{width:2.3rem;height:2.3rem;display:grid;place-items:center;border:1px solid #ffffff55;background:#151d21df;color:white}
 .loop-toggle{position:absolute;right:.9rem;bottom:.9rem;border-radius:50%}
-.loop-toggle[aria-pressed="true"]:after,.active .overlay-action:after{border:0;border-left:3px solid;border-right:3px solid;width:8px;height:12px;transform:none;box-sizing:border-box}
+.loop-toggle[aria-pressed="true"]:after,.motion button[aria-pressed="true"] .overlay-action:after{border:0;border-left:3px solid;border-right:3px solid;width:8px;height:12px;transform:none;box-sizing:border-box}
 .model-copy{padding-top:1.15rem}
 h3{font-weight:600;font-size:clamp(1.35rem,1.8vw,1.65rem);letter-spacing:-.045em;line-height:1.2}
 .model-copy p{color:var(--muted);margin:.55rem 0 .8rem;max-width:35rem;line-height:1.55}

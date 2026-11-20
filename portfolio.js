@@ -21,10 +21,41 @@ const studies = [
 const categories = { handling: 'Objets', furniture: 'Mobilier', personal: 'Gestes du quotidien' };
 const gallery = document.querySelector('#motions');
 const more = document.querySelector('#more');
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const loops = new Map();
+const cards = new Map();
 let category = 'all';
 let expanded = false;
 
+function syncLoop(loop) {
+  const playing = loop.visible && (loop.choice ?? !motionPreference.matches);
+  const src = playing ? loop.gif : loop.poster;
+  if (loop.img.getAttribute('src') !== src) loop.img.src = src;
+  loop.button.setAttribute('aria-pressed', String(playing));
+}
+
+const loopObserver = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    const loop = loops.get(entry.target);
+    loop.visible = entry.isIntersecting && entry.intersectionRatio > 0;
+    syncLoop(loop);
+  }
+}, {threshold: [0, 0.01]});
+motionPreference.addEventListener('change', () => loops.forEach(syncLoop));
+
+function registerLoop(frame, img, button, gif) {
+  const loop = { button, img, gif, poster: img.getAttribute('src'), visible: false, choice: null };
+  loops.set(frame, loop);
+  syncLoop(loop);
+  loopObserver.observe(frame);
+  button.addEventListener('click', () => {
+    loop.choice = button.getAttribute('aria-pressed') !== 'true';
+    syncLoop(loop);
+  });
+}
+
 function motionCard([id, title, group]) {
+  if (cards.has(id)) return cards.get(id);
   const card = document.createElement('figure');
   card.className = 'motion';
   const button = document.createElement('button');
@@ -40,13 +71,7 @@ function motionCard([id, title, group]) {
   img.width = 420;
   img.height = 316;
   button.type = 'button';
-  button.setAttribute('aria-pressed', 'false');
   button.setAttribute('aria-label', 'Animer le geste « ' + title + ' »');
-  button.addEventListener('click', () => {
-    const active = button.classList.toggle('active');
-    button.setAttribute('aria-pressed', String(active));
-    img.src = 'assets/ink/' + id + (active ? '.gif' : '.webp');
-  });
   titleText.className = 'motion-title';
   titleText.textContent = title;
   groupText.className = 'motion-category';
@@ -54,6 +79,8 @@ function motionCard([id, title, group]) {
   caption.append(titleText, groupText);
   button.append(img, playIcon);
   card.append(button, caption);
+  registerLoop(button, img, button, 'assets/ink/' + id + '.gif');
+  cards.set(id, card);
   return card;
 }
 
@@ -134,29 +161,8 @@ document.querySelector('#arduino-open').addEventListener('click', () => {
   openAnimation('Les composants de l’Arduino Uno R3', 'arduino-uno');
 });
 
-// Download teaching loops as they enter view. A manual pause persists when scrolling.
-const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 document.querySelectorAll('.model-frame').forEach(frame => {
   const img = frame.querySelector('img');
   const button = frame.querySelector('button');
-  const poster = img.getAttribute('src');
-  const label = button.getAttribute('aria-label');
-  let userChoice = null;
-  let visible = false;
-  function sync() {
-    const playing = visible && (userChoice ?? !motionPreference.matches);
-    const src = playing ? img.dataset.loop : poster;
-    if (img.getAttribute('src') !== src) img.src = src;
-    button.setAttribute('aria-pressed', String(playing));
-    button.setAttribute('aria-label', playing ? label.replace('Lire', 'Arrêter') : label);
-  }
-  button.addEventListener('click', () => {
-    userChoice = button.getAttribute('aria-pressed') !== 'true';
-    sync();
-  });
-  new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    sync();
-  }, {threshold:0.05}).observe(frame);
-  motionPreference.addEventListener('change', sync);
+  registerLoop(frame, img, button, img.dataset.loop);
 });
