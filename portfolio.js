@@ -66,12 +66,19 @@ function motionCard([id, title, group]) {
   const playIcon = document.createElement('span');
   playIcon.className = 'overlay-action';
   playIcon.ariaHidden = 'true';
-  img.src = 'assets/ink/' + id + '.webp';
+  const media = 'assets/ink/' + id;
+  img.src = media + '.gif';
   img.alt = '';
   img.width = 420;
   img.height = 316;
   button.type = 'button';
   button.setAttribute('aria-label', 'Animer le geste « ' + title + ' »');
+  button.setAttribute('aria-pressed', 'true');
+  button.addEventListener('click', () => {
+    const resume = button.getAttribute('aria-pressed') === 'false';
+    img.src = media + (resume ? '.gif' : '.webp');
+    button.setAttribute('aria-pressed', String(resume));
+  });
   titleText.className = 'motion-title';
   titleText.textContent = title;
   groupText.className = 'motion-category';
@@ -79,7 +86,6 @@ function motionCard([id, title, group]) {
   caption.append(titleText, groupText);
   button.append(img, playIcon);
   card.append(button, caption);
-  registerLoop(button, img, button, 'assets/ink/' + id + '.gif');
   cards.set(id, card);
   return card;
 }
