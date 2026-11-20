@@ -21,36 +21,17 @@ const studies = [
 const categories = { handling: 'Objets', furniture: 'Mobilier', personal: 'Gestes du quotidien' };
 const gallery = document.querySelector('#motions');
 const more = document.querySelector('#more');
-const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
-const loops = new Map();
 const cards = new Map();
 let category = 'all';
 let expanded = false;
 
-function syncLoop(loop) {
-  const playing = loop.visible && (loop.choice ?? !motionPreference.matches);
-  const src = playing ? loop.gif : loop.poster;
-  if (loop.img.getAttribute('src') !== src) loop.img.src = src;
-  loop.button.setAttribute('aria-pressed', String(playing));
-}
-
-const loopObserver = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    const loop = loops.get(entry.target);
-    loop.visible = entry.isIntersecting && entry.intersectionRatio > 0;
-    syncLoop(loop);
-  }
-}, {threshold: [0, 0.01]});
-motionPreference.addEventListener('change', () => loops.forEach(syncLoop));
-
-function registerLoop(frame, img, button, gif) {
-  const loop = { button, img, gif, poster: img.getAttribute('src'), visible: false, choice: null };
-  loops.set(frame, loop);
-  syncLoop(loop);
-  loopObserver.observe(frame);
+function bindLoopToggle(img, button, poster) {
+  const gif = img.getAttribute('src');
+  button.setAttribute('aria-pressed', 'true');
   button.addEventListener('click', () => {
-    loop.choice = button.getAttribute('aria-pressed') !== 'true';
-    syncLoop(loop);
+    const resume = button.getAttribute('aria-pressed') === 'false';
+    img.src = resume ? gif : poster;
+    button.setAttribute('aria-pressed', String(resume));
   });
 }
 
@@ -73,12 +54,7 @@ function motionCard([id, title, group]) {
   img.height = 316;
   button.type = 'button';
   button.setAttribute('aria-label', 'Animer le geste « ' + title + ' »');
-  button.setAttribute('aria-pressed', 'true');
-  button.addEventListener('click', () => {
-    const resume = button.getAttribute('aria-pressed') === 'false';
-    img.src = media + (resume ? '.gif' : '.webp');
-    button.setAttribute('aria-pressed', String(resume));
-  });
+  bindLoopToggle(img, button, media + '.webp');
   titleText.className = 'motion-title';
   titleText.textContent = title;
   groupText.className = 'motion-category';
@@ -170,5 +146,5 @@ document.querySelector('#arduino-open').addEventListener('click', () => {
 document.querySelectorAll('.model-frame').forEach(frame => {
   const img = frame.querySelector('img');
   const button = frame.querySelector('button');
-  registerLoop(frame, img, button, img.dataset.loop);
+  bindLoopToggle(img, button, img.dataset.poster);
 });
