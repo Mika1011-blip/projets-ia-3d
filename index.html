@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f9f8f4">
+  <meta name="description" content="Deux projets personnels de Minh Khang THAI en démonstration : le tuteur visuel Beehive et le moteur d’animation Ink Short Studio.">
+  <title>Beehive &amp; Ink Short Studio — Minh Khang THAI</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="portfolio.js" type="module"></script>
+</head>
+<body id="accueil">
+  <a class="skip" href="#contenu">Aller au contenu</a>
+  <header class="mast">
+    <div class="wrap mast-inner">
+      <a class="identity" href="#accueil"><span class="sigil" aria-hidden="true">mk</span><span>Minh Khang THAI</span></a>
+      <nav aria-label="Projets"><a href="#beehive">Beehive</a><a href="#ink">Ink Short Studio</a></nav>
+    </div>
+  </header>
+  <main id="contenu">
+    <section class="hero wrap" aria-labelledby="title">
+      <div class="intro">
+        <p class="eyebrow"><span class="rule"></span>Projets personnels</p>
+        <h1 id="title">L’IA pour <br>apprendre<br><em>et animer.</em></h1>
+        <p class="lead">Je développe un tuteur qui dessine ses explications à l’écran et un moteur qui donne vie à des personnages articulés.</p>
+        <p class="byline">Minh Khang THAI <span>·</span> EFREI<br><span class="degree">Big Data &amp; Machine Learning</span></p>
+      </div>
+      <div class="screen">
+        <div class="screen-mat">
+          <div class="mat-meta" aria-hidden="true"><span>Beehive</span><span>Démonstration V4</span></div>
+          <a class="pitch-launch" data-pitch href="assets/beehive/beehive-v4.mp4" aria-label="Lire la vidéo de démonstration de Beehive V4">
+            <img src="assets/beehive/beehive-v4.webp" width="1280" height="720" alt="Le tuteur Beehive affiche une surface en 3D pour expliquer la descente de gradient." fetchpriority="high">
+          </a>
+          <div class="mat-corners" aria-hidden="true"><i></i><i></i></div>
+        </div>
+        <a class="playbar" data-pitch href="assets/beehive/beehive-v4.mp4"><span class="play-icon" aria-hidden="true"></span><span>Voir la démo Beehive</span><span class="time">03:06</span></a>
+      </div>
+    </section>
+
+    <section class="bee-section" id="beehive" aria-labelledby="bee-title">
+      <div class="wrap">
+        <div class="section-intro">
+          <div><p class="eyebrow"><span class="rule"></span>Tuteur visuel</p><h2 id="bee-title">Beehive<span class="dot">.</span></h2></div>
+          <p>Beehive aide les étudiants à comprendre un cours avec des schémas, des animations et des modèles 3D. Son tuteur IA peut annoter directement l’écran. Ces deux exemples illustrent cette façon d’expliquer.</p>
+        </div>
+        <div class="models">
+          <article class="model">
+            <div class="model-frame">
+              <img src="assets/models/neural-network-poster.png" data-loop="assets/models/neural-network.gif" alt="Un signal traverse les couches successives d’un réseau de neurones." width="720" height="450" loading="lazy">
+              <button class="loop-toggle" type="button" aria-label="Lire l’animation du réseau de neurones"></button>
+            </div>
+            <div class="model-copy"><h3>Un réseau de neurones en 3D</h3><p>Suivez le signal des entrées jusqu’à la sortie, puis faites pivoter le réseau pour observer ses connexions.</p><button class="text-btn" id="network-open" type="button">Manipuler le réseau</button></div>
+          </article>
+          <article class="model">
+            <div class="model-frame">
+              <img src="assets/models/arduino-uno-poster.png" data-loop="assets/models/arduino-uno.gif" alt="Vue éclatée schématique des principaux composants d’une carte Arduino Uno R3." width="720" height="450" loading="lazy">
+              <button class="loop-toggle" type="button" aria-label="Lire l’animation de la carte Arduino"></button>
+            </div>
+            <div class="model-copy"><h3>Une carte Arduino en vue éclatée</h3><p>Repérez les composants d’une Uno R3 et voyez où chacun se situe sur la carte.</p><button class="text-btn" id="arduino-open" type="button">Agrandir la vue éclatée</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ink" class="ink-section" aria-labelledby="ink-title">
+      <div class="wrap">
+        <div class="section-intro">
+          <div><p class="eyebrow"><span class="rule"></span>Moteur d’animation 3D</p><h2 id="ink-title">Ink Short <em>Studio.</em></h2></div>
+          <p>Je développe un pipeline où des agents IA s’appuient sur des consignes spécialisées, le modèle 3D local TRELLIS et des ressources Three.js. Ces études montrent comment un personnage en papier découpé interagit avec les objets d’une scène.</p>
+        </div>
+        <div class="gallery-top"><h3>Études de mouvement</h3><span id="gallery-count" class="count" aria-live="polite"></span></div>
+        <div class="filters" aria-label="Filtrer les mouvements" role="group">
+          <button type="button" data-category="all" aria-pressed="true">Tous</button>
+          <button type="button" data-category="handling" aria-pressed="false">Objets</button>
+          <button type="button" data-category="furniture" aria-pressed="false">Mobilier</button>
+          <button type="button" data-category="personal" aria-pressed="false">Gestes du quotidien</button>
+        </div>
+        <div id="motions" class="motions"></div>
+        <button id="more" class="more" type="button">Afficher les 18 mouvements</button>
+        <noscript><p>Pour voir les études sans JavaScript, ouvrez les GIFs du <a href="assets/ink/toss.gif">lancer de balle</a>, de la <a href="assets/ink/ride-swing.gif">balançoire</a> ou du <a href="assets/ink/cooking.gif">geste de cuisine</a>.</p></noscript>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer"><span>Minh Khang THAI <span class="separator">/</span> EFREI</span><a href="#accueil">Retour en haut</a></footer>
+  <dialog id="viewer" aria-labelledby="viewer-title"><div class="dialog-bar"><h2 id="viewer-title"></h2><button id="dismiss" type="button" aria-label="Fermer la fenêtre">Fermer <span aria-hidden="true">×</span></button></div><div id="viewer-body"></div></dialog>
+</body>
+</html>

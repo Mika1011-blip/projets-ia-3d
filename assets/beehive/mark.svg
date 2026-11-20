@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<defs><mask id="gap"><rect width="100" height="100" fill="#fff"/><polygon points="50,35 62.99,42.5 62.99,57.5 50,65 37.01,57.5 37.01,42.5" fill="#000" stroke="#000" stroke-width="4" stroke-linejoin="round"/></mask></defs>
+<path d="M12.5 31.25 Q50 56.25 87.5 31.25 M12.5 68.75 Q50 43.75 87.5 68.75 M31.25 12.5 Q56.25 50 31.25 87.5 M68.75 12.5 Q43.75 50 68.75 87.5" fill="none" stroke="#000000" stroke-width="4.4" mask="url(#gap)"/>
+<path d="M50 37.31 L60.99 43.65 L60.99 56.35 L50 62.69 L39.01 56.35 L39.01 43.65 Z M45 50 A5 5 0 1 0 55 50 A5 5 0 1 0 45 50 Z" fill="#000000" fill-rule="evenodd"/>
+</svg>
